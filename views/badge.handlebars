@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>{{type}}</title>
+</head>
+
+<body>
+  <svg id="badge" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <style type="text/css">
+        @import url('https://fonts.googleapis.com/css2?family=Nunito');
+      </style>
+    </defs>
+    <g>
+      <rect id="badge-border" x="0.5" y="0.5" rx="4.5" height="99%" stroke="#E4E2E2"
+        fill="#fffefe" stroke-opacity="1" />
+      <g transform="translate({{padding}}, {{padding}})">
+        <svg id="badge-logo" class="icon" x="0" y="0" viewBox="0 0 32 32" version="1.1" width="32" height="32">
+          {{{icon}}}
+        </svg>
+        <text id="badge-label" x="34" y="22"
+          style="font-family: Nunito, sans-serif; font-size: 18px; font-weight: 500; fill: black">
+          {{label}}
+        </text>
+      </g>
+    </g>
+  </svg>
+
+  <script type="text/javascript">
+    const badge = document.getElementById("badge");
+    const badgeBorder = document.getElementById("badge-border")
+    const badgeLogo = document.getElementById("badge-logo");
+    const badgeLabel = document.getElementById("badge-label");
+
+    const badgeLabelBoundingRect = badgeLabel.getBoundingClientRect();
+    const badgeLogoBoundingRect = badgeLogo.getBoundingClientRect();
+    const badgePadding = {{{ padding }}}
+
+    const desiredWidth = 2 + badgePadding + badgeLogoBoundingRect.width + 2 + badgeLabelBoundingRect.width + badgePadding;
+    const desiredHeight = badgePadding + badgeLogoBoundingRect.height + badgePadding
+
+    badgeBorder.setAttribute("width", desiredWidth - 1)
+    badge.setAttribute("width", desiredWidth)
+    badge.setAttribute("height", desiredHeight)
+    badge.setAttribute("viewBox", `0 0 ${desiredWidth} ${desiredHeight}`)
+  </script>
+</body>
+
+</html>
