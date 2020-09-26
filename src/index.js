@@ -10,6 +10,10 @@ const port = 3001
 const app = express()
 const discordClient = new Discord.Client()
 
+app.get('/', (request, response) => {
+  response.redirect('https://github.com/neg4n/github-contact-badges/blob/master/README.md')
+})
+
 app.get('/discord', async (request, response) => {
   const { id, padding } = request.query
   const { username, discriminator } = await discordClient.users.fetch(id)
