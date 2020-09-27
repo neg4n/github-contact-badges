@@ -7,6 +7,8 @@ Make your markdown 'contact' section beautiful with badges generated on the fly.
 ### Available badges list
 
 #### Discord
+`/discord?id=YOUR_DISCORD_ID&padding=PIXELS`
+
 Embed this code in your README.md
 ```html
 <img src="https://badges.krynn.dev/discord?id=YOUR_DISCORD_ID&padding=8">
