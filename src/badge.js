@@ -1,7 +1,7 @@
 import pixelWidth from 'string-pixel-width'
 
 export default class Badge {
-  constructor(logo, label, padding) {
+  constructor(logo, label, padding = 8) {
     this.logo = logo
     this.label = label
     this.padding = parseInt(padding)
