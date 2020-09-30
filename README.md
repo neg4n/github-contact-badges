@@ -16,10 +16,21 @@ Example badge:
 
 <img src="https://badges.krynn.dev/discord?id=683285092336271364&padding=8">
 
+#### Matrix.org
+Route: `/matrix`  
+Parameters:
+ - `id=%23hello:wvffle.net` (**String**) (required)
+ - `padding=8` (**number**) (optional)
+
+Example badge:
+
+<img src="https://badges.krynn.dev/matrix?id=%23hello:wvffle.net&padding=8">
 
 ### Special thanks
 
-Special thanks to [Oskarr1239](https://github.com/Oskarr1239) for hosting this on https://badges.krynn.dev/
+Special thanks to:
+- [Oskarr1239](https://github.com/Oskarr1239) for hosting this on https://badges.krynn.dev/
+- [wvffle](https://github.com/wvffle) for matrix.org badge
 
 ### Disclaimer
 Logos in `assets/` are not made by me and original authors will be linked here.
