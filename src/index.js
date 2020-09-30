@@ -6,6 +6,7 @@ import validation from './validation.js'
 import Discord from 'discord.js'
 import Badge from './badge.js'
 import Utils from './utilities.js'
+import { once } from 'events'
 
 const port = 3001
 const app = express()
@@ -21,6 +22,12 @@ app.get('/discord', async (request, response) => {
   const { id, padding } = request.query
   let userTag
 
+  if (discordClient.readyAt === null) {
+    discordClient.login(envVars.DISCORD_TOKEN)
+    await once(discordClient, 'ready')
+  }
+
+  console.log(discordClient.readyAt)
   try {
     const { username, discriminator } = await discordClient.users.fetch(id)
     userTag = `${username}#${discriminator}`
@@ -39,6 +46,5 @@ app.get('/discord', async (request, response) => {
 })
 
 app.listen(port, () => {
-  discordClient.login(envVars.DISCORD_TOKEN)
   console.log(`Example app listening at http://localhost:${port}`)
 })
