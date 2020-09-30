@@ -27,7 +27,6 @@ app.get('/discord', async (request, response) => {
     await once(discordClient, 'ready')
   }
 
-  console.log(discordClient.readyAt)
   try {
     const { username, discriminator } = await discordClient.users.fetch(id)
     userTag = `${username}#${discriminator}`
