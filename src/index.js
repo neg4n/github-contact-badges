@@ -44,6 +44,19 @@ app.get('/discord', async (request, response) => {
   response.send(discordBadge)
 })
 
+app.get('/matrix', async (request, response) => {
+  const { id, padding } = request.query
+
+  const badge = new Badge(
+    Utils.readAsset('matrix-logo.svg'),
+    id,
+    padding
+  ).build()
+
+  response.type('image/svg+xml')
+  response.send(badge)
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
