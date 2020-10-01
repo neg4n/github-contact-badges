@@ -1,66 +1,31 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
-import { envVars } from './env-vars.js'
 import express from 'express'
-import validation from './validation.js'
-import Discord from 'discord.js'
-import Badge from './badge.js'
-import Utils from './utilities.js'
-import { once } from 'events'
 
-const port = 3001
+import DiscordRoute from './routes/discord.js'
+import MatrixRoute from './routes/matrix.js'
+import EmailRoute from './routes/email.js'
+
+const port = 3000
 const app = express()
-const discordClient = new Discord.Client()
 
-app.use(validation)
+async function bootstrap() {
+  app.get('/', (request, response) => {
+    response.redirect('https://github.com/neg4n/github-contact-badges/blob/master/README.md')
+  })
 
-app.get('/', (request, response) => {
-  response.redirect('https://github.com/neg4n/github-contact-badges/blob/master/README.md')
-})
+  const discordRoute = new DiscordRoute()
+  app.use(`/${discordRoute.name}`, discordRoute.register())
 
-app.get('/discord', async (request, response) => {
-  let userTag
+  const matrixRoute = new MatrixRoute()
+  app.use(`/${matrixRoute.name}`, matrixRoute.register())
 
-  const { manual, name, discriminator, id, padding } = request.query
-  const manualBoolean = manual ? manual.toLocaleLowerCase() === 'true' : false
+  const emailRoute = new EmailRoute()
+  app.use(`/${emailRoute.name}`, emailRoute.register())
 
-  if (discordClient.readyAt === null) {
-    discordClient.login(envVars.DISCORD_TOKEN)
-    await once(discordClient, 'ready')
-  }
-
-  if (manualBoolean) {
-    userTag = `${name}#${discriminator}`
-  } else {
-    try {
-      const { username, discriminator } = await discordClient.users.fetch(id)
-      userTag = `${username}#${discriminator}`
-    } catch (error) {
-      return response.send('Discord user not found.')
-    }
-  }
-
-  const badge = new Badge(Utils.readAsset('discord-logo-color.svg'), userTag, padding).build()
-
-  response.type('image/svg+xml')
-  response.send(badge)
-})
-
-app.get('/matrix', async (request, response) => {
-  const { id, padding } = request.query
-  const badge = new Badge(Utils.readAsset('matrix-logo.svg'), id, padding).build()
-  response.type('image/svg+xml')
-  response.send(badge)
-})
-
-app.get('/email', async (request, response) => {
-  const { address, padding } = request.query
-  const badge = new Badge(Utils.readAsset('email.svg'), address, padding).build()
-  response.type('image/svg+xml')
-  response.send(badge)
-})
-
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+  app.listen(port, () => {
+    console.log(`github-contact-badges listening at http://localhost:${port}`)
+  })
+}
+bootstrap()
