@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 dotenv.config()
+
 import { envVars } from './env-vars.js'
 import express from 'express'
 import validation from './validation.js'
@@ -34,34 +35,24 @@ app.get('/discord', async (request, response) => {
     return response.send('Discord user not found.')
   }
 
-  const discordBadge = new Badge(
-    Utils.readAsset('discord-logo-color.svg'),
-    userTag,
-    padding
-  ).build()
+  const badge = new Badge(Utils.readAsset('discord-logo-color.svg'), userTag, padding).build()
 
   response.type('image/svg+xml')
-  response.send(discordBadge)
+  response.send(badge)
 })
 
 app.get('/matrix', async (request, response) => {
   const { id, padding } = request.query
-
-  const badge = new Badge(
-    Utils.readAsset('matrix-logo.svg'),
-    id,
-    padding
-  ).build()
-
+  const badge = new Badge(Utils.readAsset('matrix-logo.svg'), id, padding).build()
   response.type('image/svg+xml')
   response.send(badge)
 })
 
 app.get('/email', async (request, response) => {
   const { address, padding } = request.query
-  const emailBadge = new Badge(Utils.readAsset('email.svg'), address, padding).build()
+  const badge = new Badge(Utils.readAsset('email.svg'), address, padding).build()
   response.type('image/svg+xml')
-  response.send(emailBadge)
+  response.send(badge)
 })
 
 app.listen(port, () => {
