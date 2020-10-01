@@ -3,15 +3,14 @@ Make your markdown 'contact' section beautiful with badges generated on the fly.
 </div>
 
 #
-> NOTE: This README is still under construction..
+
 ### Available badges list
 
 #### Discord
 Route: `/discord`  
 Parameters:
- - `manual=false` (boolean) (false by default)
- - `name` (string) (required if manual == true)
- - `discriminator` (string) (required if manual == true)
+ - `manual=false` (**boolean**) (false by default)
+ - `tag=Negan%236030` (**String**) (required if manual == true)
  - `id=YOUR_DISCORD_ID` (**Snowflake**) (required if manual == false)
  - `padding=8` (**number**) (optional) (8 by default)
 
