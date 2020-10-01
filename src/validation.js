@@ -5,12 +5,22 @@ export default function (request, response, next) {
 
   switch (request.path) {
     case '/discord':
-      const { id, padding } = request.query
-      if (id && id.length !== 18) {
-        return response.status(400).send('Invalid ID.')
-      }
-      if (padding && isNaN(+`${padding}`)) {
-        return response.status(400).send('Padding is not a number.')
+      const { manual, name, discriminator, id, padding } = request.query
+      const manualBoolean = manual ? manual.toLocaleLowerCase() === 'true' : false
+      if (manualBoolean) {
+        if (!name || name.length > 32) {
+          return response.status(400).send('Invalid name.')
+        }
+        if (!discriminator || discriminator.length > 4) {
+          return response.status(400).send('Invalid discriminator')
+        }
+      } else {
+        if (!id || id.length !== 18) {
+          return response.status(400).send('Invalid ID.')
+        }
+        if (!padding || isNaN(+`${padding}`)) {
+          return response.status(400).send('Padding is not a number.')
+        }
       }
       break
   }

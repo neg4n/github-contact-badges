@@ -9,8 +9,11 @@ Make your markdown 'contact' section beautiful with badges generated on the fly.
 #### Discord
 Route: `/discord`  
 Parameters:
- - `id=YOUR_DISCORD_ID` (**Snowflake**) (required)
- - `padding=8` (**number**) (optional)
+ - `manual=false` (boolean) (false by default)
+ - `name` (string) (required if manual == true)
+ - `discriminator` (string) (required if manual == true)
+ - `id=YOUR_DISCORD_ID` (**Snowflake**) (required if manual == false)
+ - `padding=8` (**number**) (optional) (8 by default)
 
 Example badge:
 
@@ -20,11 +23,22 @@ Example badge:
 Route: `/matrix`  
 Parameters:
  - `id=%23hello:wvffle.net` (**String**) (required)
- - `padding=8` (**number**) (optional)
+ - `padding=8` (**number**) (optional) (8 by default)
 
 Example badge:
 
 <img src="https://badges.krynn.dev/matrix?id=%23hello:wvffle.net&padding=8">
+
+#### E-mail
+
+Route: `/email`  
+Parameters:
+ - `address=negan@ctemplar.com` (**String**) (required)
+ - `padding=8` (**number**) (optional) (8 by default)
+
+Example badge:
+
+<img src="https://badges.krynn.dev/email?address=negan@ctemplar.com&padding=8">
 
 ### Special thanks
 
