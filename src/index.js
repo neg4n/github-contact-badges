@@ -20,19 +20,25 @@ app.get('/', (request, response) => {
 })
 
 app.get('/discord', async (request, response) => {
-  const { id, padding } = request.query
   let userTag
+
+  const { manual, name, discriminator, id, padding } = request.query
+  const manualBoolean = manual ? manual.toLocaleLowerCase() === 'true' : false
 
   if (discordClient.readyAt === null) {
     discordClient.login(envVars.DISCORD_TOKEN)
     await once(discordClient, 'ready')
   }
 
-  try {
-    const { username, discriminator } = await discordClient.users.fetch(id)
-    userTag = `${username}#${discriminator}`
-  } catch (error) {
-    return response.send('Discord user not found.')
+  if (manualBoolean) {
+    userTag = `${name}#${discriminator}`
+  } else {
+    try {
+      const { username, discriminator } = await discordClient.users.fetch(id)
+      userTag = `${username}#${discriminator}`
+    } catch (error) {
+      return response.send('Discord user not found.')
+    }
   }
 
   const badge = new Badge(Utils.readAsset('discord-logo-color.svg'), userTag, padding).build()
