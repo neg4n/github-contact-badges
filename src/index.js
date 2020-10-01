@@ -57,6 +57,13 @@ app.get('/matrix', async (request, response) => {
   response.send(badge)
 })
 
+app.get('/email', async (request, response) => {
+  const { address, padding } = request.query
+  const emailBadge = new Badge(Utils.readAsset('email.svg'), address, padding).build()
+  response.type('image/svg+xml')
+  response.send(emailBadge)
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })

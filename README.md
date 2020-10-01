@@ -35,3 +35,4 @@ Special thanks to:
 ### Disclaimer
 Logos in `assets/` are not made by me and original authors will be linked here.
 - `discord-logo-color.svg` by [Discord](https://discord.com/branding)
+- `email.svg` by [Icomonstr](https://iconmonstr.com/email-2-svg/)
