@@ -19,7 +19,7 @@ export default class DiscordRoute {
   }
 
   async validation(request, response, next) {
-    const { manual, tag, id, padding } = request.query
+    const { manual, tag, id, padding, cache } = request.query
     const manualBoolean = manual ? manual.toLocaleLowerCase() === 'true' : false
     if (manualBoolean) {
       if (!tag || tag.length > 39) {
@@ -29,16 +29,19 @@ export default class DiscordRoute {
       if (!id || id.length !== 18) {
         return response.status(400).send('Invalid ID.')
       }
-      if (padding && isNaN(+`${padding}`)) {
-        return response.status(400).send('Padding is not a number.')
-      }
+    }
+    if (cache && +`${cache}` < 3600) {
+      return response.status(400).send('Cache must be at least 3600')
+    }
+    if (padding && isNaN(+`${padding}`)) {
+      return response.status(400).send('Padding is not a number.')
     }
     next()
   }
 
   async handler(request, response) {
     let userTag
-    const { manual, tag, id, padding } = request.query
+    const { manual, tag, id, padding, cache } = request.query
     const manualBoolean = manual ? manual.toLocaleLowerCase() === 'true' : false
 
     if (manualBoolean) {
@@ -61,6 +64,7 @@ export default class DiscordRoute {
     const badge = new Badge(Utils.readAsset('discord-logo-color.svg'), userTag, padding).build()
 
     response.type('image/svg+xml')
+    response.setHeader('Cache-Control', `public, max-age=${cache || 3600}`)
     response.send(badge)
   }
 }

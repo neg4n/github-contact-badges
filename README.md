@@ -13,7 +13,8 @@ Parameters:
  - `tag=Negan%236030` (**String**) (required if manual == true)
  - `id=YOUR_DISCORD_ID` (**Snowflake**) (required if manual == false)
  - `padding=8` (**number**) (optional) (8 by default)
-
+ - `cache=3600` (**number**) (optional) (3600 by default)
+  
 Example badge:
 
 <img src="https://badges.krynn.dev/discord?id=683285092336271364&padding=8">
@@ -23,6 +24,7 @@ Route: `/matrix`
 Parameters:
  - `id=%23hello:wvffle.net` (**String**) (required)
  - `padding=8` (**number**) (optional) (8 by default)
+ - `cache=3600` (**number**) (optional) (3600 by default)
 
 Example badge:
 
@@ -34,6 +36,7 @@ Route: `/email`
 Parameters:
  - `address=negan@ctemplar.com` (**String**) (required)
  - `padding=8` (**number**) (optional) (8 by default)
+ - `cache=3600` (**number**) (optional) (3600 by default)
 
 Example badge:
 

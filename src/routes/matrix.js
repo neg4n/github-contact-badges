@@ -15,20 +15,24 @@ export default class MatrixRoute {
   }
 
   async validation(request, response, next) {
-    const { id, padding } = request.query
+    const { id, padding, cache } = request.query
     if (!id) {
       return response.status(400).send('Invalid id')
     }
     if (padding && isNaN(+`${padding}`)) {
       return response.status(400).send('Padding is not a number.')
     }
+    if (cache && +`${cache}` < 3600) {
+      return response.status(400).send('Cache must be at least 3600')
+    }
     next()
   }
 
   async handler(request, response) {
-    const { id, padding } = request.query
+    const { id, padding, cache } = request.query
     const badge = new Badge(Utils.readAsset('matrix-logo.svg'), id, padding).build()
     response.type('image/svg+xml')
+    response.setHeader('Cache-Control', `public, max-age=${cache || 3600}`)
     response.send(badge)
   }
 }
